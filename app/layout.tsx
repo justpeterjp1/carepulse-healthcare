@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 
 import { cn } from "@/lib/utils"
 
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const fontSans = Plus_Jakarta_Sans({
+  variable: "--font-sans",
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "CarePulse",
@@ -18,11 +23,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", inter.variable)}>
+    <html lang="en" className={cn("font-sans")} suppressHydrationWarning>
       <body
-        className={ cn('min-h-screen font-sans antialiased ', inter.variable)}
+        className={ cn('min-h-screen font-sans antialiased ')}
       >
-        {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"        
+          >
+              {children}
+          </ThemeProvider>
       </body>
     </html>
   );
